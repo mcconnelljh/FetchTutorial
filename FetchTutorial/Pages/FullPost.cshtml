@@ -1,0 +1,16 @@
+﻿@page
+@model FetchTutorial.Pages.FullPostModel
+@{
+}
+
+<div class="justify-content-center">
+    <h1 class="display-4 bg-dark text-white rounded ps-1">Posts</h1>
+    <div id="divPostContainer">
+        <form asp-page="Index" asp-page-handler="FullPage" method="post">
+            <partial name="_PagePosts" model="Model.posts" />
+        </form>
+    </div>
+    <div class="text-end">
+        <button class="btn btn-primary">Full Page Post</button>
+    </div>
+</div>

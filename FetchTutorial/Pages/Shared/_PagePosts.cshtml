@@ -1,0 +1,35 @@
+﻿@model List<FetchTutorial.Components.PostInfo>
+
+@if (Model != null)
+{
+
+    <table id="tblPosts" class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    Id
+                </th>
+                <th>
+                    Post Date
+                </th>
+                <th>
+                    Page Model
+                </th>
+                <th>
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var p in Model.OrderByDescending(x => x.PostDate))
+            {
+                <tr>
+                    <td>@p.Id</td>
+                    <td>@p.PostDate</td>
+                    <td>@p.PostPage</td>
+                    <td>@p.Action</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

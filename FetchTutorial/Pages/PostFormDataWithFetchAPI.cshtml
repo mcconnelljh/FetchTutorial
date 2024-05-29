@@ -1,0 +1,61 @@
+﻿@page
+@model FetchTutorial.Pages.PostFormDataWithFetchAPIModel
+@{
+    ViewData["Title"] = "Post Form Data with Fetch API";
+}
+
+<div class="justify-content-center">
+    <h1 class="display-4 bg-dark text-white rounded ps-1">Posts</h1>
+    <div class="text-end">
+        <div class="input-group">
+            <input type="text" id="CustomAction" class="form-control" placeholder="Enter a custom action" aria-label="Enter a custom action" aria-describedby="aPost">
+            <a href="javascript:void(0);" onclick="javascript:postFormWithFetch();" role="button" class="btn btn-primary" id="aPost">Post using Fetch</a>
+        </div>
+    </div>
+    <form asp-page="PostFormDataWithFetchAPI" asp-page-handler="FullPage" method="post">
+        <div id="divPostContainer">
+            <partial name="_PagePosts" model="Model.posts" />
+        </div>
+    </form>
+</div>
+
+@section Scripts
+    {
+    <script type="text/javascript">
+        function postFormWithFetch() {
+            var rowCount = document.getElementById('tblPosts').tBodies[0].rows.length;
+            var token = document.querySelector('input[name="__RequestVerificationToken"]').getAttribute("value");
+            var url = '@Href("~/PostFormDataWithFetchAPI?handler=FormWithFetch")';
+
+            var data = {
+                Id: rowCount + 1,
+                Action: document.getElementById('CustomAction').value,
+                PostPage: '@nameof(FetchTutorial.Pages.PostFormDataWithFetchAPIModel)'
+            };
+
+            var options = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': token
+                },
+                body: JSON.stringify(data)
+            };
+
+            console.log(data);
+
+            fetch(url, options)
+                .then(function (response) {
+                    // When the page is loaded convert it to text
+                    return response.text();
+                })
+                .then(function (html) {
+                    // You can now even select part of that html as you would in the regular DOM
+                    document.getElementById('divPostContainer').innerHTML = html;
+                })
+                .catch(function (err) {
+                    console.log('Failed to fetch page: ', err);
+                });
+        }
+    </script>
+}

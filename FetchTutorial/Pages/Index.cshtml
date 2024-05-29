@@ -1,0 +1,15 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="justify-content-center">
+    <h1 class="display-4 bg-dark text-white rounded ps-1">Posts</h1>
+    <div id="divPostContainer">
+        <partial name="_PagePosts" model="Model.posts" />
+    </div> 
+</div>
+
+
+

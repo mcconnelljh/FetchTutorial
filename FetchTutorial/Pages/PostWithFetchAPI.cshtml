@@ -1,0 +1,46 @@
+﻿@page
+@model FetchTutorial.Pages.PostWithFetchAPIModel
+@{
+    ViewData["Title"] = "Post with Fetch API";
+}
+
+<div class="justify-content-center">
+    <h1 class="display-4 bg-dark text-white rounded ps-1">Posts</h1>
+    <div id="divPostContainer">
+        <form asp-page="Index" asp-page-handler="FullPage" method="post">
+            <partial name="_PagePosts" model="Model.posts" />
+        </form>
+    </div>
+    <div class="text-end">
+        <a href="javascript:void(0);" onclick="javascript:postWithFetch();" role="button" class="btn btn-primary">Post using Fetch</a>
+    </div>
+</div>
+
+@section Scripts
+    {
+    <script type="text/javascript">
+        function postWithFetch() {
+            var url = "@Href("~/PostWithFetchAPI?handler=AddPost")";
+
+            var options = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            };
+
+            fetch(url, options)
+                .then(function (response) {
+                    // When the page is loaded convert it to text
+                    return response.text();
+                })
+                .then(function (html) {
+                    // You can now even select part of that html as you would in the regular DOM
+                    document.getElementById('divPostContainer').innerHTML = html;
+                })
+                .catch(function (err) {
+                    console.log('Failed to fetch page: ', err);
+                });
+        } // end function postWithFetch()
+    </script>
+}
